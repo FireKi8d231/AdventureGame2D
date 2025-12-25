@@ -2,6 +2,7 @@ package src.entity;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.awt.Rectangle;
 
 import javax.imageio.ImageIO;
 
@@ -54,6 +55,12 @@ public class Player extends Entity
         spriteCounter = 0;
         spriteNum = 1;
         animationSpeed = 10;
+        // for collision
+        solidArea = new Rectangle();
+        solidArea.x = gp.tileSize / 6;
+        solidArea.y = gp.tileSize / 3;
+        solidArea.width = gp.tileSize * 2 / 3;
+        solidArea.height = gp.tileSize * 2 / 3;
     }
 
     public void update()
@@ -62,23 +69,34 @@ public class Player extends Entity
         {
             if(keyH.upPressed == true)
             {
-                worldY -= speed;
                 direction = "up";
             }
             if(keyH.downPressed == true)
             {
-                worldY += speed;
                 direction = "down";
             }
             if(keyH.leftPressed == true)
             {
-                worldX -= speed;
                 direction = "left";
             }
             if(keyH.rightPressed == true)
             {
-                worldX += speed;
                 direction = "right";
+            }
+
+            // collision
+            collisionOn = false;
+            gp.cChecker.checkTile(this);
+
+            if(collisionOn == false)
+            { 
+                switch(direction)
+                {
+                    case "up": worldY -= speed; break;
+                    case "down": worldY += speed; break;
+                    case "left": worldX -= speed; break;
+                    case "right": worldX += speed; break;
+                }
             }
 
             // for animation
