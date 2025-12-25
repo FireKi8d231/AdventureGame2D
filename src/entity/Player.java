@@ -48,7 +48,7 @@ public class Player extends Entity
     {
         worldX = gp.tileSize * 23;
         worldY = gp.tileSize * 21;
-        speed = 4;
+        speed = gp.worldWidth / 600; // tot 4 o sa fie
         direction = "down";
         // for animation
         spriteCounter = 0;
