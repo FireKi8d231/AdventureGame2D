@@ -19,10 +19,10 @@ public class TileManager {
     {
         this.gp = gp;
         tile = new Tile[10];
-        mapTileNum = new int[gp.maxScreenCol][gp.maxScreenRow];
+        mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImage();
-        loadMap("/res/maps/map01.txt");
+        loadMap("/res/maps/world01.txt");
     }
 
     public void getTileImage()
@@ -46,11 +46,11 @@ public class TileManager {
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
             int col = 0, row = 0;
-            while(col < gp.maxScreenCol && row < gp.maxScreenRow)
+            while(col < gp.maxWorldCol && row < gp.maxWorldRow)
             {
                 String line = br.readLine();
 
-                while(col < gp.maxScreenCol)
+                while(col < gp.maxWorldCol)
                 {
                     String number[] = line.split(" ");
 
@@ -68,11 +68,21 @@ public class TileManager {
 
     public void draw(Graphics2D g)
     {
-        for(int col=0;col<gp.maxScreenCol;++col)
+        for(int worldCol=0;worldCol<gp.maxWorldCol;++worldCol)
         {
-            for(int row=0;row<gp.maxScreenRow;++row)
+            for(int worldRow=0;worldRow<gp.maxWorldRow;++worldRow)
             {
-                g.drawImage(tile[mapTileNum[col][row]].image, col * gp.tileSize, row * gp.tileSize, gp.tileSize, gp.tileSize, null );
+                int worldX = worldCol * gp.tileSize;
+                int worldY = worldRow * gp.tileSize;
+
+                int screenX = worldX - gp.player.worldX + gp.player.screenX;
+                int screenY = worldY - gp.player.worldY + gp.player.screenY;
+
+                int numOfTile = mapTileNum[worldCol][worldRow];
+                if(screenX + gp.tileSize >= 0 && screenX < gp.screenWidth && screenY + gp.tileSize >=0 && screenY < gp.screenHeight)
+                {
+                    g.drawImage(tile[numOfTile].image, screenX, screenY, gp.tileSize, gp.tileSize, null );
+                }
             }
         }
     }
