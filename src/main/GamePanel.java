@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 import src.entity.Player;
+import src.object.SuperObject;
 import src.tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable
@@ -38,6 +39,9 @@ public class GamePanel extends JPanel implements Runnable
     public Player player = new Player(this, keyH);
     public CollisionChecker cChecker = new CollisionChecker(this);
 
+    public SuperObject obj[] = new SuperObject[10];
+    public AssetSetter aSetter = new AssetSetter(this);
+
     public GamePanel() // constructor
     {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -45,6 +49,12 @@ public class GamePanel extends JPanel implements Runnable
         this.setDoubleBuffered(true); // pentru performanta
         this.addKeyListener(keyH);
         this.setFocusable(true);
+        setupGame();
+    }
+
+    public void setupGame()
+    {
+        aSetter.setObjects();
     }
 
     public void startGameThread()
@@ -101,6 +111,7 @@ public class GamePanel extends JPanel implements Runnable
         Graphics2D g2 = (Graphics2D)g; // g2 este mai mult ca si un creion
 
         tm.draw(g2);
+        aSetter.drawObjects(g2);
 
         player.draw(g2);
         
