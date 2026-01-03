@@ -3,6 +3,7 @@ package src.main;
 import java.awt.Graphics2D;
 
 import src.object.OBJ_Chest;
+import src.object.OBJ_Door;
 import src.object.OBJ_Key;
 
 public class AssetSetter {
@@ -13,7 +14,7 @@ public class AssetSetter {
     {
         this.gp = gp;
     }
-
+    // 32645583 parola net iustin
     public void setObjects()
     {
         gp.obj[0] = new OBJ_Key();
@@ -27,6 +28,14 @@ public class AssetSetter {
         gp.obj[2] = new OBJ_Chest();
         gp.obj[2].worldX = 10 * gp.tileSize;
         gp.obj[2].worldY = 7 * gp.tileSize;
+
+        gp.obj[3] = new OBJ_Door();
+        gp.obj[3].worldX = 10 * gp.tileSize;
+        gp.obj[3].worldY = 11 * gp.tileSize;
+
+        gp.obj[3] = new OBJ_Door();
+        gp.obj[3].worldX = 38 * gp.tileSize;
+        gp.obj[3].worldY = 13 * gp.tileSize;
     }
 
     public void drawObjects(Graphics2D g)
